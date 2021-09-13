@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/TereshchenkoSD/CLI-application/issues"
   },
-  "homepage": "https://github.com/TereshchenkoSD/CLI-application#readme"
+  "homepage": "https://github.com/TereshchenkoSD/CLI-application#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
