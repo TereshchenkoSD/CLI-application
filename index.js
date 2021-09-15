@@ -1,7 +1,41 @@
 const contacts = require("./contacts");
 
-console.log(contacts.getContactById());
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-// module.exports = {
-//   listContacts,
-// };
+program.parse(process.argv);
+
+const argv = program.opts();
+
+async function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+      return await contacts.listContacts();
+      break;
+
+    case "get":
+      return await contacts.getContactById(id);
+      break;
+
+    case "add":
+      return await contacts.addContact(name, email, phone);
+      break;
+
+    case "remove":
+      return await contacts.removeContact(id);
+      break;
+
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+}
+
+invokeAction(argv)
+  .then((data) => console.table(data))
+  .catch((error) => console.log(error));
